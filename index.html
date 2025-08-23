@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DHARNESH S | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --main-color: #0ff;
+      --bg-color: #0a0a0a;
+      --text-color: #e0e0e0;
+      --accent-color: #08f;
+      --card-bg: #111;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    nav {
+      background: rgba(0, 0, 0, 0.9);
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0 0 10px var(--main-color);
+    }
+
+    nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav ul li a {
+      color: var(--main-color);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #0af;
+      transform: scale(1.1);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+
+    h1, h2, h3 {
+      color: var(--main-color);
+      text-shadow: 0 0 8px var(--main-color);
+      animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #0af;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 0;
+      border-bottom: 2px solid var(--accent-color);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px var(--main-color); }
+      to { text-shadow: 0 0 20px var(--main-color), 0 0 30px var(--main-color); }
+    }
+
+    .profile-pic {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 1rem auto;
+      display: block;
+      border: 4px solid var(--main-color);
+    }
+
+    .section {
+      margin: 3rem 0;
+      animation: fadeInUp 1s ease;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .badge {
+      background: var(--accent-color);
+      color: #000;
+      padding: 0.4rem 0.8rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .badge:hover {
+      transform: scale(1.1);
+      background: #0cf;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent-color);
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    }
+
+    ul {
+      padding-left: 1.5rem;
+    }
+
+    ul li {
+      margin-bottom: 0.6rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      nav ul li a {
+        font-size: 1.2rem;
+        padding: 0.5rem;
+      }
+    }
+    .invisible {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease-out;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Section animation */
+.pre-slide {
+  opacity: 0;
+  transform: translateY(50px);
+}
+.slide-up {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.8s ease;
+}
+
+/* Tilt on hover for card already covered by JS */
+
+/* Cursor trail */
+#cursor-trail {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle, cyan 20%, transparent 80%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  transition: top 0.1s ease, left 0.1s ease;
+}
+
+/* Optional: Floating orbs background */
+body::before {
+  content: '';
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 10% 20%, rgba(0, 255, 255, 0.05), transparent),
+              radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.05), transparent),
+              radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.08), transparent);
+  z-index: 0;
+  pointer-events: none;
+  animation: moveBackground 20s infinite linear;
+}
+
+@keyframes moveBackground {
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 100%; }
+}
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+.man{
+ background-color: rgb(6, 132, 132);
+ justify-content: space-around;
+ text-decoration: none;
+ color: white;
+ padding: 2px;
+ margin: 40%;
+ 
+}
+.man:hover{
+  color: white;
+}
+
+
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+
+  <nav>
+    <ul>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <header>
+      <h1>DHARNESH S</h1>
+      <img src="IMG_0783%209025031152.jpg" alt="Dharnesh's Profile" class="profile-pic">
+      <p>Final Year B.E. CSE Student<br>Mahendra Institute of Technology</p>
+      <p>
+        <a href="https://www.linkedin.com/in/dharnesh-s-b43872336" target="_blank">LinkedIn</a> |
+        <a href="https://drive.google.com/file/d/1nWVcvIiCjUYLdknLbvgxC0eF_D1Kyt6W/view?usp=drivesdk" target="_blank">Resume</a> |
+        <a href="https://github.com/dharnesh-cpu" target="_blank">Github</a>
+      </p>
+    </header>
+
+    <section class="section" id="education">
+      <h2>Education</h2>
+      <ul>
+        <li>R.C Sacred Heart Higher Secondary School (2019-2020) – 10th Std with 71.6%</li>
+        <li>S.R.V Boys Higher Secondary School, Rasipuram (2021-2022) – 12th Std with 70.7%</li>
+        <li>Mahendra Institute of Technology (2022 - 2026) – B.E. CSE with 7.25 CGPA</li>
+      </ul>
+    </section>
+
+   <section class="section" id="skills">
+  <h2>Skills</h2>
+
+  <h3>Frontend</h3>
+  <div class="badges">
+    <span class="badge">HTML</span>
+    <span class="badge">CSS</span>
+    <span class="badge">JavaScript</span>
+  </div>
+
+  <h3>Backend</h3>
+  <div class="badges">
+    <span class="badge">Java</span>
+    <span class="badge">postgreSQL</span>
+  </div>
+
+  <h3>Programming Languages</h3>
+  <div class="badges">
+    <span class="badge">Core Java</span>
+    <span class="badge">Python Basics</span>
+  </div>
+
+  <h3>Computer Science Concepts</h3>
+  <div class="badges">
+    <span class="badge">OOPS</span>
+    <span class="badge">DSA</span>
+    <span class="badge">Operating Systems</span>
+  </div>
+
+  <h2 style="margin-top:2rem;">Tools</h2>
+  <div class="badges">
+    <span class="badge">Git</span>
+    <span class="badge">VS Code</span>
+    <span class="badge">Eclipse</span>
+    <span class="badge">IntelliJ IDEA</span>
+    <span class="badge">Android Studio</span>
+  </div>
+</section>
+
+     
+
+    <section class="section" id="projects">
+      <h2>Academic Projects</h2>
+      <div class="card">
+        <h3>GrandStay - Online booking platform</h3>
+        <p>Developed web-based Application that allows users to book rooms online with features like room availability, booking confirmation and user management.
+using HTML, CSS, and JavaScript.</p>
+        <a href="https://dharnesh-cpu.github.io/grandstay/" class="man">Click Here for Demo</a>
+
+      </div>
+      <div class="card">
+        <h3>Royal Enfield Digital Experience portal</h3>
+        <p>Designed a basic yet elegant website for Royal Enfield enthusiasts highlighting models, history, and fan gallery using HTML, CSS, and JavaScript.</p>
+        <a href="https://dharnesh-cpu.github.io/Royal_Enfield/" class="man">Click Here for Demo</a>
+
+      </div>
+       <div class="card">
+        <h3>Restaurant Website</h3>
+        <p>Created a responsive website for a restaurant using HTML, CSS, and JavaScript showcasing menu, contact, and gallery pages.</p>
+        <a href="https://dharnesh-cpu.github.io/Restaurant/" class="man">Click Here for Demo</a>
+      </div>
+      <div class="card">
+        <h3>Smart Expense Tracker</h3>
+        <p>Built a Java-based desktop application to record and manage daily expenses. Designed a user-friendly console/GUI interface with clear input validation.</p>
+        <a href=" https://dharnesh-cpu.github.io/Expense-Tracker/" class="man">Click Here for Demo</a>
+
+      </div>
+      <div class="card">
+        <h3>Employee Management</h3>
+        <p>Console-based application to manage student academic performance: total, average, and grades.</p>
+      </div>
+     
+      
+    </section>
+
+    <section class="section" id="certifications">
+      <h2>Certifications & Workshops</h2>
+      <ul>
+        <li>Android Flutter Workshop – Mahendra Institute of Technology</li>
+        <li>CSC - Diploma in Full-Stack Java [DFJd]</li>
+        <li>CSC - Advanced Diploma in Python Programming [ADPP]</li>
+        <li>National Level Workshop – Muthayammal Engineering College</li>
+      </ul>
+    </section>
+
+    <section class="section" id="contact">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:dharneshcse26@gmail.com">dharneshcse26@gmail.com</a></p>
+      <p>Phone: <a href="tel:9025031152">9025031152</a></p>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 DHARNESH S. All rights reserved.</p>
+    </footer>
+  </div>
+  <script>
+  // Typing Effect for Header
+  const header = document.querySelector('header h1');
+  const fullText = header.textContent;
+  let i = 0;
+  header.textContent = '';
+  const typing = () => {
+    if (i < fullText.length) {
+      header.textContent += fullText.charAt(i);
+      i++;
+      setTimeout(typing, 100);
+    }
+  };
+  typing();
+
+  // Scroll fade-in animation
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.section, .card').forEach(el => {
+    el.classList.add('invisible');
+    observer.observe(el);
+  });
+</script>
+<script>
+  // Typing animation for header
+  const header = document.querySelector('header h1');
+  const text = header.textContent;
+  header.textContent = '';
+  let index = 0;
+  function type() {
+    if (index < text.length) {
+      header.textContent += text.charAt(index);
+      index++;
+      setTimeout(type, 120);
+    }
+  }
+  type();
+
+  // Scroll reveal with staggered animation
+  const sections = document.querySelectorAll('.section, .card');
+  const options = { threshold: 0.1 };
+  const revealOnScroll = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('slide-up');
+        revealOnScroll.unobserve(entry.target);
+      }
+    });
+  }, options);
+
+  sections.forEach((section, i) => {
+    section.style.transitionDelay = `${i * 150}ms`;
+    section.classList.add('pre-slide');
+    revealOnScroll.observe(section);
+  });
+
+  // Card hover tilt
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  // Cursor glow trail
+  const trail = document.createElement('div');
+  trail.id = 'cursor-trail';
+  document.body.appendChild(trail);
+  document.addEventListener('mousemove', (e) => {
+    trail.style.top = e.pageY + 'px';
+    trail.style.left = e.pageX + 'px';
+  });
+</script>
+<script>
+// Dynamic particle background
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+function createParticles(num) {
+  particles = [];
+  for (let i = 0; i < num; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 2 + 1,
+      dx: (Math.random() - 0.5) * 0.5,
+      dy: (Math.random() - 0.5) * 0.5,
+    });
+  }
+}
+createParticles(100);
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = 'rgba(0, 255, 255, 0.7)';
+  for (let p of particles) {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    p.x += p.dx;
+    p.y += p.dy;
+
+    // Bounce off edges
+    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+  }
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+</script>
+
+
+
+</body>
+</html>
